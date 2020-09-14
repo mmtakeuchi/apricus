@@ -1,0 +1,2 @@
+class WinesController < ApplicationController
+end
