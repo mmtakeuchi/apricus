@@ -12,10 +12,12 @@ class Wine {
         div.setAttribute("id", wine.id)
 
         for (const attr in wine) {
+            if (attr !== "id") {
             let p = document.createElement("p");
             p.classList.add(`${attr}`)
             p.innerText = wine[attr];
             div.appendChild(p);
+            }
         }
     
         wineContainer().appendChild(div)
