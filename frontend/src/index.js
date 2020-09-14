@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", onLoad)
 
 function onLoad() {
     loadWines();
+    wineForm().addEventListener('submit', Wine.createWine);
 }
 
 function loadWines() {
@@ -23,8 +24,8 @@ function loadWines() {
         return resp.json()
     })
     .then (data => {
-        // Wine.createWine(data);
-        Wine.renderWine(data[0]);
+        Wine.createWines(data);
+        Wine.displayWines();
     })
     .catch(errors => console.log(errors))
 }
