@@ -13,11 +13,19 @@
 ActiveRecord::Schema.define(version: 2020_09_14_080347) do
 
   create_table "reviews", force: :cascade do |t|
+    t.string "username"
+    t.string "content"
+    t.boolean "recommend"
+    t.string "wine_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "wines", force: :cascade do |t|
+    t.string "label"
+    t.string "varietal"
+    t.string "region"
+    t.string "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
