@@ -42,7 +42,7 @@ class Wine {
         return wine;
     }
 
-    static createWineForm(e) {
+    static addWine(e) {
         e.preventDefault();
         
         const strongParams = {
@@ -54,11 +54,11 @@ class Wine {
             }
         }
 
-        fetch(baseUrl + "/wines.json", {
+        fetch(`${baseUrl}/wines.json`, {
             method: "POST",
-            header: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
             },
             body: JSON.stringify(strongParams)
         })
@@ -75,4 +75,3 @@ class Wine {
         Wine.all.forEach(wine => wine.renderWine())
     }
 }
-

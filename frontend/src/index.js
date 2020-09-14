@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", onLoad)
 
 function onLoad() {
     loadWines();
-    wineForm().addEventListener('submit', Wine.createWineForm);
+    wineForm().addEventListener('submit', Wine.addWine);
 }
 
 function loadWines() {
-    fetch(baseUrl + "/wines")
+    fetch(`${baseUrl}/wines`)
     .then (resp => {
         if (resp.status !== 200) {
             throw new Error(resp.statusText);
