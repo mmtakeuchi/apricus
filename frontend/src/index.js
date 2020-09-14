@@ -1,4 +1,7 @@
 const baseUrl = "http://localhost:3000"
+const wineContainer = () => document.querySelector("div.main-container");
+
+
 
 document.addEventListener("DOMContentLoaded", onLoad)
 
@@ -15,8 +18,8 @@ function loadWines() {
         return resp.json()
     })
     .then (data => {
-        Wine.createWine(data);
-        Wine.displayWine();
+        // Wine.createWine(data);
+        Wine.renderWine(data[0]);
     })
     .catch(errors => console.log(errors))
 }
