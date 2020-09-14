@@ -3,7 +3,7 @@ class WinesController < ApplicationController
 
     def index
         wines = Wine.all
-        render json: wines
+        render json: wines, include [:reviews]
     end
 
     def show
