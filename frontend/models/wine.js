@@ -1,4 +1,7 @@
 class Wine {
+
+    static all =[];
+
     constructor(label, varietal, region, price) {
         this.label = label;
         this.varietal = varietal;
@@ -23,9 +26,13 @@ class Wine {
         wineContainer().appendChild(div)
     }
 
+    static createWine(e) {
+        
+    }
+
 
     static displayWines() {
-        // wine.forEach(wine => wine.renderWine())
+        // Wine.all.forEach(wine => wine.renderWine())
     }
 }
 

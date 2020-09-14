@@ -1,6 +1,11 @@
 const baseUrl = "http://localhost:3000"
-const wineContainer = () => document.querySelector("div.main-container");
 
+const wineContainer = () => document.querySelector("div.main-container");
+const wineForm = () => document.querySelector("div.wineForm");
+const wineLabel = () => document.getElementById("wine-label");
+const wineVarietal = () => document.getElementById("wine-varietal");
+const wineRegion = () => document.getElementById("wine-region");
+const winePrice = () => document.getElementById("wine-price");
 
 
 document.addEventListener("DOMContentLoaded", onLoad)
