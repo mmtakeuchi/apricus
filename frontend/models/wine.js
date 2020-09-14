@@ -1,6 +1,6 @@
 class Wine {
 
-    static all =[];
+    static all = [];
 
     constructor(id, label, varietal, region, price) {
         this.id = id;
@@ -19,29 +19,26 @@ class Wine {
             if (attr !== "id") {
                 let p = document.createElement("p");
                 p.classList.add(`${attr}`)
-                p.innerText = this[attr];
+                p.innerText = `${attr}:  ${this[attr]}`;
                 div.appendChild(p);
             }
         }
-    
         wineContainer().appendChild(div)
     }
 
-    static createWines(winesData) {
-        winesData.forEach(data => Wine.create(data.id, data.label, data.varietal, data.region, data.price));
+    static createWines(wineData) {
+        wineData.forEach(data => Wine.create(data.id, data.label, data.varietal, data.region, data.price));
     }
 
     static create(id, label, varietal, region, price) {
         let wine = new Wine(id, label, varietal, region, price);
-
         Wine.all.push(wine);
-
         return wine;
     }
 
     static createWineForm(e) {
         e.preventDefault();
-
+        
         const strongParams = {
             wine: {
                 label: wineLabel().value,
@@ -53,9 +50,9 @@ class Wine {
 
         fetch(baseUrl + "/wines.json", {
             method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
+            header: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
             },
             body: JSON.stringify(strongParams)
         })
@@ -64,13 +61,12 @@ class Wine {
             let wine = Wine.create(data.id, data.label, data.varietal, data.region, data.price);
             wine.renderWine();
         })
+        .catch(errors => console.log(errors))
     }
 
 
     static displayWines() {
-        Wine.all.forEach(wine => {
-            wine.renderWine()
-        })
+        Wine.all.forEach(wine => wine.renderWine())
     }
 }
 

@@ -1,18 +1,19 @@
 const baseUrl = "http://localhost:3000"
 
 const wineContainer = () => document.querySelector("div.main-container");
-const wineForm = () => document.querySelector("div.wineForm");
+const wineForm = () => document.querySelector("form");
 const wineLabel = () => document.getElementById("wine-label");
 const wineVarietal = () => document.getElementById("wine-varietal");
 const wineRegion = () => document.getElementById("wine-region");
 const winePrice = () => document.getElementById("wine-price");
+const wineSubmit = () => document.getElementById("submit-wine")
 
 
 document.addEventListener("DOMContentLoaded", onLoad)
 
 function onLoad() {
     loadWines();
-    wineForm().addEventListener('submit', Wine.createWine);
+    wineForm().addEventListener('submit', Wine.createWineForm);
 }
 
 function loadWines() {
