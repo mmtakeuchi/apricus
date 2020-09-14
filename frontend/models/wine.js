@@ -12,8 +12,8 @@ class Wine {
 
     renderWine() {
         const div = document.createElement("div");
-        div.classList.add("card")
-        div.setAttribute("id", this.id)
+        div.classList.add("card");
+        div.setAttribute("id", this.id);
 
         for (const attr in this) {
             if (attr !== "id") {
@@ -23,6 +23,12 @@ class Wine {
                 div.appendChild(p);
             }
         }
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "Delete Wine";
+        deleteBtn.addEventListener("click", Wine.deleteWine)
+
+        div.appendChild(deleteBtn);
         wineContainer().appendChild(div)
     }
 
