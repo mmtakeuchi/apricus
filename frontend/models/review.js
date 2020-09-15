@@ -24,8 +24,14 @@ class Review {
         contentForm.innerHTML = "<label for='content'>Review: </label>";
         contentForm.innerHTML += "<textarea id='content' name='content'></textarea>";
 
+        let recommendForm = document.createElement("div")
+        recommendForm.innerHTML = "<label for='recommend'>Recommend? </label>"
+        recommendForm.innerHTML += "<input type='radio' name='recommend' value='yes'> Yes";
+        recommendForm.innerHTML += "<input type='radio' name='recommend' value='no'> No";
+
         reviewForm.appendChild(usernameForm);
         reviewForm.appendChild(contentForm);
+        reviewForm.appendChild(recommendForm);
         div.appendChild(reviewForm);
     }
 }
