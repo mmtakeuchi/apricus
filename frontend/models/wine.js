@@ -24,6 +24,11 @@ class Wine {
             }
         }
 
+        const editBtn = document.createElement("button");
+        editBtn.id = this.id
+        editBtn.innerText = "Edit Wine";
+        editBtn.addEventListener("click", Wine.editWine);
+
         const deleteBtn = document.createElement("button");
         deleteBtn.id = this.id
         deleteBtn.innerText = "Delete Wine";
