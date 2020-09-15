@@ -37,9 +37,8 @@ class Wine {
 
         const reviewBtn = document.createElement("button");
         reviewBtn.id = this.id
-        reviewBtn.innerText = "Add Review";
+        reviewBtn.innerText = "Create Review";
         reviewBtn.addEventListener("click", Review.createReviewForm);
-
 
         div.appendChild(reviewBtn);
         div.appendChild(editBtn);

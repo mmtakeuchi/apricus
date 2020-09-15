@@ -29,9 +29,19 @@ class Review {
         recommendForm.innerHTML += "<input type='radio' name='recommend' value='yes'> Yes";
         recommendForm.innerHTML += "<input type='radio' name='recommend' value='no'> No";
 
+        let submitReview = document.createElement("input")
+        submitReview.setAttribute("type", "submit")
+        submitReview.value = "Add Review";
+        submitReview.addEventListener("click", Review.addReview) 
+
         reviewForm.appendChild(usernameForm);
         reviewForm.appendChild(contentForm);
         reviewForm.appendChild(recommendForm);
+        reviewForm.appendChild(submitReview);
         div.appendChild(reviewForm);
+    }
+
+    static addReview() {
+        
     }
 }
