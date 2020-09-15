@@ -1,7 +1,7 @@
 class Wine {
 
     static all = [];
-    static editWineId = null;
+    static editedWine = null;
 
     constructor(id, label, varietal, region, price) {
         this.id = id;
@@ -59,7 +59,7 @@ class Wine {
         winePrice().value = this.parentNode.querySelector('p.price').innerText;
         wineSubmit().value = "Update Wine";
 
-        Wine.editWineId = this.id
+        Wine.editedWine = this.parentNode
     }
 
     static addWine(e) {
@@ -111,7 +111,7 @@ class Wine {
             }
         }
         
-        fetch(baseUrl + "/wines/" + Wine.editWineId, {
+        fetch(baseUrl + "/wines/" + `${Wine.editedWine.id}`, {
             method: "PATCH",
             headers: {
                 "Accept": "application/json",
@@ -121,16 +121,15 @@ class Wine {
         })
         .then(resp => resp.json())
         .then(data => {
-            let editedWine = Wine.all.find(wine => wine.id == data.id);
-            console.log(editedWine)
-            editedWine.label = data.label;
-            editedWine.varietal = data.varietal;
-            editedWine.region = data.region;
-            editedWine.price = data.price;
+            let updatedWien = Wine.all.find(wine => wine.id == data.id);
+            updatedWien.label = data.label;
+            updatedWien.varietal = data.varietal;
+            updatedWien.region = data.region;
+            updatedWien.price = data.price;
             Wine.displayWines();
 
             editing = false;
-            Wine.editedWineId = null;
+            Wine.editedWine = null;
             resetInputs();
             wineSubmit().value = "Create Wine";
         })
@@ -142,15 +141,18 @@ class Wine {
         fetch(baseUrl + "/wines/" + `${wineId}`, {
             method: "DELETE"
         })
-        .then(resp => resp.json())
+        .then(resp => {
+            return resp.json()
+        })
         .then(data => {
             // Wine.all = Wine.all.filter(wine => wine.id !== data.id);
-            e.target.remove();
+            wineId.target.remove();
             Wine.displayWines();
         })
     }
 
     static displayWines() {
-        Wine.all.forEach(wine => wine.renderWine())
+        wineContainer().innerText = "";
+        Wine.all.forEach(wine => wine.renderWine());
     }
 }
