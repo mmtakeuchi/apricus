@@ -33,8 +33,15 @@ class Wine {
         const deleteBtn = document.createElement("button");
         deleteBtn.id = this.id
         deleteBtn.innerText = "Delete Wine";
-        deleteBtn.addEventListener("click", Wine.deleteWine)
+        deleteBtn.addEventListener("click", Wine.deleteWine);
 
+        const reviewBtn = document.createElement("button");
+        reviewBtn.id = this.id
+        reviewBtn.innerText = "Add Review";
+        // reviewBtn.addEventListener("click", Review.createReview);
+
+
+        div.appendChild(reviewBtn);
         div.appendChild(editBtn);
         div.appendChild(deleteBtn);
         wineContainer().appendChild(div)
