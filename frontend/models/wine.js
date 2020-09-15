@@ -1,6 +1,7 @@
 class Wine {
 
     static all = [];
+    static editWineId = null;
 
     constructor(id, label, varietal, region, price) {
         this.id = id;
@@ -19,7 +20,7 @@ class Wine {
             if (attr !== "id") {
                 let p = document.createElement("p");
                 p.classList.add(`${attr}`)
-                p.innerText = `${attr}:  ${this[attr]}`;
+                p.innerText = `${this[attr]}`;
                 div.appendChild(p);
             }
         }
@@ -34,6 +35,7 @@ class Wine {
         deleteBtn.innerText = "Delete Wine";
         deleteBtn.addEventListener("click", Wine.deleteWine)
 
+        div.appendChild(editBtn);
         div.appendChild(deleteBtn);
         wineContainer().appendChild(div)
     }
@@ -48,32 +50,87 @@ class Wine {
         return wine;
     }
 
+    static editWine(e) {
+        editing = true;
+
+        console.log(this.parentNode)
+        wineLabel().value = this.parentNode.querySelector('p.label').innerText;
+        wineVarietal().value = this.parentNode.querySelector('p.varietal').innerText;
+        wineRegion().value = this.parentNode.querySelector('p.region').innerText;
+        winePrice().value = this.parentNode.querySelector('p.price').innerText;
+        wineSubmit().value = "Edit Wine";
+
+        Wine.editWineId = this.id
+    }
+
     static addWine(e) {
         e.preventDefault();
-        
+
+        if (editing) {
+            Wine.updateWine();
+        } else {
+            const strongParams = {
+                wine: {
+                    label: wineLabel().value,
+                    varietal: wineVarietal().value,
+                    region: wineRegion().value,
+                    price: winePrice().value,
+                }
+            }
+    
+            fetch(`${baseUrl}/wines.json`, {
+                method: "POST",
+                headers: {
+                  "Accept": "application/json",
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(strongParams)
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                let wine = Wine.create(data.id, data.label, data.varietal, data.region, data.price);
+                wine.renderWine();
+            })
+            .catch(errors => console.log(errors))
+        }
+    }
+
+    static updateWine(e) {
+        let label = wineLabel().value;
+        let varietal = wineVarietal().value;
+        let region = wineRegion().value;
+        let price = winePrice().value;
+
         const strongParams = {
             wine: {
-                label: wineLabel().value,
-                varietal: wineVarietal().value,
-                region: wineRegion().value,
-                price: winePrice().value,
+                label: label,
+                varietal: varietal,
+                region: region,
+                price: price
             }
         }
 
-        fetch(`${baseUrl}/wines.json`, {
-            method: "POST",
+        fetch(baseUrl + "/wines/" + Wine.editWineId, {
+            method: "PATCH",
             headers: {
-              "Accept": "application/json",
-              "Content-Type": "application/json"
-            },
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+                },
             body: JSON.stringify(strongParams)
         })
         .then(resp => resp.json())
         .then(data => {
-            let wine = Wine.create(data.id, data.label, data.varietal, data.region, data.price);
-            wine.renderWine();
+            let editedWine = Wine.all.find(wine => wine.id == data.id);
+            editedWine.label = data.label;
+            editedWine.varietal = data.varietal;
+            editedWine.region = data.region;
+            editedWine.price = data.price;
+            Wine.displayWines();
+
+            editing = false;
+            Wine.editedWineId = null;
+            wineSubmit().innerText = "Create Wine";
         })
-        .catch(errors => console.log(errors))
     }
 
     static deleteWine(e) {
@@ -84,7 +141,8 @@ class Wine {
         })
         .then(resp => resp.json())
         .then(data => {
-            Wine.all = Wine.all.filter(wine => wine.id !== data.id);
+            // Wine.all = Wine.all.filter(wine => wine.id !== data.id);
+            e.target.remove();
             Wine.displayWines();
         })
     }
