@@ -25,6 +25,7 @@ class Wine {
         }
 
         const deleteBtn = document.createElement("button");
+        deleteBtn.id = this.id
         deleteBtn.innerText = "Delete Wine";
         deleteBtn.addEventListener("click", Wine.deleteWine)
 
@@ -70,6 +71,18 @@ class Wine {
         .catch(errors => console.log(errors))
     }
 
+    static deleteWine(e) {
+        let wineId = e.target.parentNode.id
+
+        fetch(baseUrl + "/wines/" + `${wineId}`, {
+            method: "DELETE"
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            Wine.all = Wine.all.filter(wine => wine.id !== data.id);
+            Wine.displayWines();
+        })
+    }
 
     static displayWines() {
         Wine.all.forEach(wine => wine.renderWine())

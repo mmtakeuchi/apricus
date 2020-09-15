@@ -1,5 +1,5 @@
 class WinesController < ApplicationController
-    before_action :set_wine, only: [:show]
+    before_action :set_wine, only: [:show, :destroy]
 
     def index
         @wines = Wine.all
@@ -18,6 +18,10 @@ class WinesController < ApplicationController
         else
             render json: @wine.errors.full_messages, status: :unprocessable_entity
         end
+    end
+
+    def destroy
+        @wine.destroy
     end
 
     private
