@@ -31,3 +31,10 @@ function loadWines() {
     })
     .catch(errors => console.log(errors))
 }
+
+function resetInputs() {
+    wineLabel().value = "";
+    wineVarietal().value = "";
+    wineRegion().value = "";
+    winePrice().value = "";
+}

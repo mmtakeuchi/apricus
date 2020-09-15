@@ -53,12 +53,11 @@ class Wine {
     static editWine(e) {
         editing = true;
 
-        console.log(this.parentNode)
         wineLabel().value = this.parentNode.querySelector('p.label').innerText;
         wineVarietal().value = this.parentNode.querySelector('p.varietal').innerText;
         wineRegion().value = this.parentNode.querySelector('p.region').innerText;
         winePrice().value = this.parentNode.querySelector('p.price').innerText;
-        wineSubmit().value = "Edit Wine";
+        wineSubmit().value = "Update Wine";
 
         Wine.editWineId = this.id
     }
@@ -91,7 +90,9 @@ class Wine {
                 let wine = Wine.create(data.id, data.label, data.varietal, data.region, data.price);
                 wine.renderWine();
             })
-            .catch(errors => console.log(errors))
+            .catch(errors => console.log(errors));
+
+            resetInputs();
         }
     }
 
@@ -109,7 +110,7 @@ class Wine {
                 price: price
             }
         }
-
+        
         fetch(baseUrl + "/wines/" + Wine.editWineId, {
             method: "PATCH",
             headers: {
@@ -121,6 +122,7 @@ class Wine {
         .then(resp => resp.json())
         .then(data => {
             let editedWine = Wine.all.find(wine => wine.id == data.id);
+            console.log(editedWine)
             editedWine.label = data.label;
             editedWine.varietal = data.varietal;
             editedWine.region = data.region;
@@ -129,7 +131,8 @@ class Wine {
 
             editing = false;
             Wine.editedWineId = null;
-            wineSubmit().innerText = "Create Wine";
+            resetInputs();
+            wineSubmit().value = "Create Wine";
         })
     }
 
