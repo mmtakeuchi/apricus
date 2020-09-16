@@ -20,8 +20,9 @@ class Wine {
         for (const attr in this) {
             if (attr !== "id") {
                 let p = document.createElement("p");
-                p.classList.add(`${attr}`)
-                p.innerText = `${this[attr]}`;
+                p.classList.add(`${attr}`);
+                p.innerText = `${attr.charAt(0).toUpperCase() + attr.slice(1)}: `;
+                p.innerText += `${this[attr]}`;
                 div.appendChild(p);
             }
         }
@@ -41,19 +42,24 @@ class Wine {
         deleteBtn.addEventListener("click", Wine.deleteWine);
 
         const reviewBtn = document.createElement("button");
-        reviewBtn.id = this.id;
         reviewBtn.classList.add("btn", "btn-block", "btn-link");
+        reviewBtn.setAttribute("id", this.id)
         reviewBtn.setAttribute("type", "button");
+        reviewBtn.setAttribute("data-toggle", "collapse");
         reviewBtn.innerText = "Reviews"
-        reviewBtn.addEventListener("click", Review.loadReviews(this.id, div));
+        reviewBtn.addEventListener("click", e => {
+            Review.loadReviews(e, this.id, div);
+        });
 
         const addReviewBtn = document.createElement("button");
         addReviewBtn.id = this.id;
         addReviewBtn.classList.add("col", "btn", "btn-sm", "btn-info");
         addReviewBtn.setAttribute("type", "button");
-        addReviewBtn.setAttribute("data-toggle", "collapse");
+        addReviewBtn.setAttribute("data-toggle", "modal");
+        addReviewBtn.setAttribute("data-target", "#exampleModal");
         addReviewBtn.innerText = "Create Review"
-        addReviewBtn.addEventListener("click", Review.createReviewForm);
+        addReviewBtn.addEventListener("click", Review.createReviewForm, {passive: false});
+        
 
         const btnDiv = document.createElement("div")
         btnDiv.classList.add("row")
@@ -95,7 +101,7 @@ class Wine {
 
     static addWine(e) {
         e.preventDefault();
-        
+
         if (editing) {
             Wine.updateWine();
         } else {
@@ -167,18 +173,18 @@ class Wine {
     }
 
     static deleteWine(e) {
-        let wine = e.target.parentNode
-        debugger;
-        fetch(`${baseUrl}/wines/${wine.id}`, {
-            method: "delete"
+        fetch(`${baseUrl}/wines/${e.target.parentNode.parentNode.id}`, {
+            method: "DELETE"
         })
-        .then(resp => {
+        .then (resp => {
+            if (resp.status !== 200) {
+                throw new Error(resp.statusText);
+            }
             return resp.json();
         })
         .then(data => {
-            Wine.all = Wine.all.filter(wine => wine.id !== data.id);
             debugger;
-            // wine.remove();
+            Wine.all = Wine.all.filter(wine => wine.id !== data.id);
             Wine.displayWines();
         })
     }

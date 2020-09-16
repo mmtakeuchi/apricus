@@ -10,7 +10,9 @@ class Review {
         this.wine_id = wine_id
     }
 
-    static loadReviews(wineId, wineDiv) {  
+    static loadReviews(e, wineId, wineDiv) {
+        e.preventDefault();
+
         fetch(`${baseUrl}/wines/${wineId}`)
         .then (resp => {
             if (resp.status !== 200) {
@@ -26,14 +28,44 @@ class Review {
     }
 
     static createReviewForm(e) {
-        
-        Review.creatingReview = true;
-
         const wineCard = e.target.parentNode.parentNode;
+        // let example = document.createElement("div")
+        // example.setAttribute("id", "exampleModal")
+        // example.innerHTML = '<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">'
+        // example.innerHTML += '<div class="modal-dialog">';
+        // example.innerHTML +=     '<div class="modal-content">';
+        // example.innerHTML +=         '<div class="modal-header">'
+        // example.innerHTML +=             '<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>'
+        // example.innerHTML +=             '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'
+        // example.innerHTML +=             '<span aria-hidden="true">&times;</span>'
+        // example.innerHTML +=            '</button>'
+        // example.innerHTML +=        '</div>'
+        // example.innerHTML +=        '<div class="modal-body">'
+        // example.innerHTML +=            '...'
+        // example.innerHTML +=         '</div>'
+        // example.innerHTML +=        '<div class="modal-footer">'
+        // example.innerHTML +=            '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'
+        // example.innerHTML +=            '<button type="button" class="btn btn-primary">Save changes</button>'
+        // example.innerHTML +=        '</div>'
+        // example.innerHTML +=    '</div>'
+        // example.innerHTML +=     '</div>'
+        // example.innerHTML += '</div>'
+
+
+        // mainContainer().appendChild(example)
+        let closeBtn = document.createElement("button");
+        closeBtn.setAttribute("type", "button")
+        closeBtn.setAttribute("aria-label", "Close")
+        closeBtn.classList.add("close")
+
+        let closeSpan = document.createElement("span");
+        closeSpan.setAttribute("aria-hidden", "true");
+        closeSpan.innerHTML = "x";
+        closeBtn.appendChild(closeSpan);
 
         let reviewForm = document.createElement("form")
         reviewForm.setAttribute("id", "reviewForm")
-
+        
         let usernameInput = document.createElement("div")
         usernameInput.classList.add("form-group")
         usernameInput.innerHTML = "<label for='username'>Nickname: </label>";
@@ -54,6 +86,7 @@ class Review {
         submitReview.classList.add("btn", "btn-outline-primary")
         submitReview.value = "Add Review";
         
+        reviewForm.appendChild(closeBtn);
         reviewForm.appendChild(usernameInput);
         reviewForm.appendChild(contentInput);
         reviewForm.appendChild(recommendInput);
@@ -62,15 +95,18 @@ class Review {
             Review.addReview(wineCard, reviewForm);
             e.preventDefault();
         })
+
         wineCard.appendChild(reviewForm);
+        e.target.removeEventListener("click", Review.createReviewForm, {passive: false});
     }
 
     renderReview(wineCard) {
         let div = document.createElement("div");
         div.setAttribute("id", this.id);
+        div.classList.add("list-unstyled")
 
         let usernameP = document.createElement("p");
-        usernameP.classList.add("username");
+        usernameP.classList.add("username", "font-weight-bold");
         usernameP.innerText = `${this.username}`;
 
         let contentP = document.createElement("p");
@@ -136,17 +172,10 @@ class Review {
             reviewForm.innerText = "";
         })
         .catch(errors => console.log(errors))
-
-        Review.creatingReview = false;
     }
 
     static displayReviews(wineDiv) {
         this.innerText = "";
-        // Review.all.forEach(review => {
-        //     debugger;
-        //     // let reviews = data.reviews.filter(review => review.wine_id == data.id)
-        //     review.renderReview(wineDiv)
-        // });
         let reviews = Review.all.filter(review => review.wine_id == wineDiv.id)
         reviews.forEach(review => review.renderReview(wineDiv))
     }
