@@ -3,11 +3,11 @@ class WinesController < ApplicationController
 
     def index
         @wines = Wine.all
-        render json: @wines, include: [:reviews], except: [:created_at, :updated_at]
+        render json: @wines, except: [:created_at, :updated_at]
     end
 
     def show
-        render json: @wine
+        render json: @wine, include: [:reviews]
     end
 
     def create

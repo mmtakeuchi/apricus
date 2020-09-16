@@ -11,9 +11,7 @@ class ReviewsController < ApplicationController
     end
 
     def create
-        @wine = Wine.find_by_id(params[:wine_id])
-
-        @review = @wine.reviews.build(review_params)
+        @review = Review.new(review_params)
 
         if @review.save
             render json: @review, status: :created
@@ -29,6 +27,6 @@ class ReviewsController < ApplicationController
     end
 
     def review_params
-        params.require(:review).permit(:username, :content, :recommend)
+        params.require(:review).permit(:username, :content, :recommend, :wine_id)
     end
 end

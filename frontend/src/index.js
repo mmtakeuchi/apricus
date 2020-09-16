@@ -17,7 +17,7 @@ function onLoad() {
     wineForm().addEventListener('submit', Wine.addWine);
 }
 
-function loadWines() {
+function loadWines(div) {
     fetch(`${baseUrl}/wines`)
     .then (resp => {
         if (resp.status !== 200) {

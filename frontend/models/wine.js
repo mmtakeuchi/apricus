@@ -15,6 +15,7 @@ class Wine {
         const div = document.createElement("div");
         div.classList.add("card");
         div.setAttribute("id", this.id);
+        // div.setAttribute("onclick", Review.createReviewForm)
 
         for (const attr in this) {
             if (attr !== "id") {
@@ -37,10 +38,16 @@ class Wine {
 
         const reviewBtn = document.createElement("button");
         reviewBtn.id = this.id
-        reviewBtn.innerText = "Create Review";
-        reviewBtn.addEventListener("click", Review.createReviewForm);
+        reviewBtn.innerText = "Reviews"
+        reviewBtn.addEventListener("onclick", Review.loadReviews(this.id, div));
 
-        div.appendChild(reviewBtn);
+        const addReviewBtn = document.createElement("button");
+        addReviewBtn.id = this.id
+        addReviewBtn.innerText = "Create Review"
+        addReviewBtn.addEventListener("click", Review.createReviewForm);
+
+        div.appendChild(reviewBtn)
+        div.appendChild(addReviewBtn)
         div.appendChild(editBtn);
         div.appendChild(deleteBtn);
         wineContainer().appendChild(div)

@@ -7,4 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Wine.create(label: "Chandon", varietal: "sparkling", region: "California", price: "$$")
-Review.create(username: "Tanner", content: "Good brut sparkling wine. Slightly sweet with a hint of apple and pear.", recommend: true, wine_id: 1)
+Review.create(username: "Tanner", content: "Good brut sparkling wine. Slightly sweet with a hint of apple and pear.", recommend: true, wine_id: 25)
