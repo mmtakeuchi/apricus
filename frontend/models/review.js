@@ -117,18 +117,15 @@ class Review {
         recommendP.classList.add("recommend");
         recommendP.innerText = `${this.recommend ? "Yes, I recommend" : "No, I do not recommend"}`;
         
-        // for (const attr in this) {
-        //     if (attr !== "id") {
-        //         let username = document.createElement("p");
-        //         p.classList.add(`${attr}`)
-        //         p.innerText = `${this[attr]}`;
-        //         div.appendChild(p);
-        //     }
-        // }        
+        let deleteReview = document.createElement("button");
+        deleteReview.setAttribute("type", "button");
+        deleteReview.classList.add("btn", "btn-sm", "btn-danger");
+        deleteReview.innerText = "Delete Review";
         
         div.appendChild(usernameP);
         div.appendChild(contentP);
         div.appendChild(recommendP);
+        div.appendChild(deleteReview);
         wineCard.appendChild(div);
     }
 
