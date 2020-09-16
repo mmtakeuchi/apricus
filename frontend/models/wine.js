@@ -159,7 +159,8 @@ class Wine {
         })
         .then(data => {
             // Wine.all = Wine.all.filter(wine => wine.id !== data.id);
-            wineId.target.remove();
+            debugger;
+            wineId.remove();
             Wine.displayWines();
         })
     }
