@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-    before_action :set_review, only: [:show]
+    before_action :set_review, only: [:show, :destroy]
     def index
         @reviews = Review.all
 
@@ -18,6 +18,10 @@ class ReviewsController < ApplicationController
         else
             render json: @review.errors.full_messages, status: :unprocessable_entity
         end
+    end
+
+    def destroy
+        @review.destroy
     end
 
     private 
