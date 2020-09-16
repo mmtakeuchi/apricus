@@ -95,7 +95,7 @@ class Wine {
 
     static addWine(e) {
         e.preventDefault();
-
+        
         if (editing) {
             Wine.updateWine();
         } else {
@@ -104,7 +104,7 @@ class Wine {
                     label: wineLabel().value,
                     varietal: wineVarietal().value,
                     region: wineRegion().value,
-                    price: winePrice().value,
+                    price: Array.prototype.find.call(winePrice(), price => price.checked).id
                 }
             }
     
