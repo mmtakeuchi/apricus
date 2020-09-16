@@ -1,6 +1,6 @@
 class Review {
-
     static all = [];
+    static creatingReview = false;
 
     constructor(id, username, content, recommend, wine_id) {
         this.id = id;
@@ -26,26 +26,32 @@ class Review {
     }
 
     static createReviewForm(e) {
-        const wineCard = e.target.parentNode;
+        
+        Review.creatingReview = true;
+
+        const wineCard = e.target.parentNode.parentNode;
 
         let reviewForm = document.createElement("form")
         reviewForm.setAttribute("id", "reviewForm")
 
         let usernameInput = document.createElement("div")
+        usernameInput.classList.add("form-group")
         usernameInput.innerHTML = "<label for='username'>Nickname: </label>";
         usernameInput.innerHTML += "<input type='text' id='username' name='username'>";
 
-        let contentInput = document.createElement("div")
+        let contentInput = document.createElement("div");
+        contentInput.classList.add("form-group");
         contentInput.innerHTML = "<label for='content'>Review: </label>";
         contentInput.innerHTML += "<textarea id='content' name='content'></textarea>";
 
-        let recommendInput = document.createElement("div")
-        recommendInput.innerHTML = "<label for='recommend'>Recommend? </label>"
-        recommendInput.innerHTML += "<input type='radio' id='recommend' name='recommend' value='true'> Yes";
-        recommendInput.innerHTML += "<input type='radio' id='recommend' name='recommend' value='false'> No";
-
+        let recommendInput = document.createElement("div");
+        recommendInput.classList.add("form-group");
+        recommendInput.innerHTML = "<label for='recommend'> Recommend:</label>"
+        recommendInput.innerHTML += "<input type='checkbox' id='recommend' name='recommend' value='true'>";
+        
         let submitReview = document.createElement("input")
         submitReview.setAttribute("type", "submit")
+        submitReview.classList.add("btn", "btn-outline-primary")
         submitReview.value = "Add Review";
         
         reviewForm.appendChild(usernameInput);
@@ -73,7 +79,7 @@ class Review {
         
         let recommendP = document.createElement("p");
         recommendP.classList.add("recommend");
-        recommendP.innerText = `${this.recommend}`;
+        recommendP.innerText = `${this.recommend ? "Yes, I recommend" : "No, I do not recommend"}`;
         
         // for (const attr in this) {
         //     if (attr !== "id") {
@@ -82,16 +88,11 @@ class Review {
         //         p.innerText = `${this[attr]}`;
         //         div.appendChild(p);
         //     }
-        // }  
-        // const addReviewBtn = document.createElement("button");
-        // addReviewBtn.id = this.id
-        // addReviewBtn.innerText = "Create Review"
-        // addReviewBtn.addEventListener("click", Review.createReviewForm);      
+        // }        
         
         div.appendChild(usernameP);
         div.appendChild(contentP);
         div.appendChild(recommendP);
-        // div.appendChild(addReviewBtn)
         wineCard.appendChild(div);
     }
 
@@ -106,10 +107,9 @@ class Review {
     }
 
     static addReview(wineCard, reviewForm) {
-        debugger;
         const usernameInputValue = reviewForm.querySelector("input#username").value
         const contentInputValue = reviewForm.querySelector("textarea#content").value
-        const recommendInputValue = Array.prototype.find.call(reviewForm.querySelectorAll("input#recommend"), x => x.checked).value
+        const recommendInputValue = reviewForm.querySelector("input#recommend").checked
         
         const strongParams = {
             review: {
@@ -136,10 +136,18 @@ class Review {
             reviewForm.innerText = "";
         })
         .catch(errors => console.log(errors))
+
+        Review.creatingReview = false;
     }
 
     static displayReviews(wineDiv) {
         this.innerText = "";
-        Review.all.forEach(review => review.renderReview(wineDiv));
+        // Review.all.forEach(review => {
+        //     debugger;
+        //     // let reviews = data.reviews.filter(review => review.wine_id == data.id)
+        //     review.renderReview(wineDiv)
+        // });
+        let reviews = Review.all.filter(review => review.wine_id == wineDiv.id)
+        reviews.forEach(review => review.renderReview(wineDiv))
     }
 }

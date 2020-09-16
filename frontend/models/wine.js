@@ -13,7 +13,7 @@ class Wine {
 
     renderWine() {
         const div = document.createElement("div");
-        div.classList.add("card");
+        div.classList.add("card", "col-4");
         div.setAttribute("id", this.id);
         // div.setAttribute("onclick", Review.createReviewForm)
 
@@ -27,30 +27,48 @@ class Wine {
         }
 
         const editBtn = document.createElement("button");
-        editBtn.id = this.id
+        editBtn.id = this.id;
+        editBtn.classList.add("col", "btn", "btn-sm", "btn-success")
+        editBtn.setAttribute("type", "button");
         editBtn.innerText = "Edit Wine";
         editBtn.addEventListener("click", Wine.editWine);
 
         const deleteBtn = document.createElement("button");
-        deleteBtn.id = this.id
+        deleteBtn.id = this.id;
+        deleteBtn.classList.add("col", "btn", "btn-sm", "btn-danger");
+        deleteBtn.setAttribute("type", "button");
         deleteBtn.innerText = "Delete Wine";
         deleteBtn.addEventListener("click", Wine.deleteWine);
 
         const reviewBtn = document.createElement("button");
-        reviewBtn.id = this.id
+        reviewBtn.id = this.id;
+        reviewBtn.classList.add("btn", "btn-block", "btn-link");
+        reviewBtn.setAttribute("type", "button");
         reviewBtn.innerText = "Reviews"
-        reviewBtn.addEventListener("onclick", Review.loadReviews(this.id, div));
+        reviewBtn.addEventListener("click", Review.loadReviews(this.id, div));
 
         const addReviewBtn = document.createElement("button");
-        addReviewBtn.id = this.id
+        addReviewBtn.id = this.id;
+        addReviewBtn.classList.add("col", "btn", "btn-sm", "btn-info");
+        addReviewBtn.setAttribute("type", "button");
+        addReviewBtn.setAttribute("data-toggle", "collapse");
         addReviewBtn.innerText = "Create Review"
         addReviewBtn.addEventListener("click", Review.createReviewForm);
 
-        div.appendChild(reviewBtn)
-        div.appendChild(addReviewBtn)
-        div.appendChild(editBtn);
-        div.appendChild(deleteBtn);
+        const btnDiv = document.createElement("div")
+        btnDiv.classList.add("row")
+        btnDiv.appendChild(reviewBtn);
+        btnDiv.appendChild(addReviewBtn)
+        btnDiv.appendChild(editBtn);
+        btnDiv.appendChild(deleteBtn);
+        div.appendChild(btnDiv)
         wineContainer().appendChild(div)
+
+        // div.appendChild(reviewBtn)
+        // div.appendChild(addReviewBtn)
+        // div.appendChild(editBtn);
+        // div.appendChild(deleteBtn);
+        // wineContainer().appendChild(div)
     }
 
     static createWines(wineData) {
@@ -66,13 +84,13 @@ class Wine {
     static editWine(e) {
         editing = true;
 
-        wineLabel().value = this.parentNode.querySelector('p.label').innerText;
-        wineVarietal().value = this.parentNode.querySelector('p.varietal').innerText;
-        wineRegion().value = this.parentNode.querySelector('p.region').innerText;
-        winePrice().value = this.parentNode.querySelector('p.price').innerText;
+        wineLabel().value = this.parentNode.parentNode.querySelector('p.label').innerText;
+        wineVarietal().value = this.parentNode.parentNode.querySelector('p.varietal').innerText;
+        wineRegion().value = this.parentNode.parentNode.querySelector('p.region').innerText;
+        winePrice().value = this.parentNode.parentNode.querySelector('p.price').innerText;
         wineSubmit().value = "Update Wine";
 
-        Wine.editedWine = this.parentNode
+        Wine.editedWine = this.parentNode.parentNode
     }
 
     static addWine(e) {
@@ -149,18 +167,18 @@ class Wine {
     }
 
     static deleteWine(e) {
-        let wineId = e.target.parentNode.id
-
-        fetch(baseUrl + "/wines/" + `${wineId}`, {
-            method: "DELETE"
+        let wine = e.target.parentNode
+        debugger;
+        fetch(`${baseUrl}/wines/${wine.id}`, {
+            method: "delete"
         })
         .then(resp => {
-            return resp.json()
+            return resp.json();
         })
         .then(data => {
-            // Wine.all = Wine.all.filter(wine => wine.id !== data.id);
+            Wine.all = Wine.all.filter(wine => wine.id !== data.id);
             debugger;
-            wineId.remove();
+            // wine.remove();
             Wine.displayWines();
         })
     }
