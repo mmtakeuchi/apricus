@@ -27,77 +27,101 @@ class Review {
         })
     }
 
+
     static createReviewForm(e) {
         const wineCard = e.target.parentNode.parentNode;
-        // let example = document.createElement("div")
-        // example.setAttribute("id", "exampleModal")
-        // example.innerHTML = '<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">'
-        // example.innerHTML += '<div class="modal-dialog">';
-        // example.innerHTML +=     '<div class="modal-content">';
-        // example.innerHTML +=         '<div class="modal-header">'
-        // example.innerHTML +=             '<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>'
-        // example.innerHTML +=             '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'
-        // example.innerHTML +=             '<span aria-hidden="true">&times;</span>'
-        // example.innerHTML +=            '</button>'
-        // example.innerHTML +=        '</div>'
-        // example.innerHTML +=        '<div class="modal-body">'
-        // example.innerHTML +=            '...'
-        // example.innerHTML +=         '</div>'
-        // example.innerHTML +=        '<div class="modal-footer">'
-        // example.innerHTML +=            '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'
-        // example.innerHTML +=            '<button type="button" class="btn btn-primary">Save changes</button>'
-        // example.innerHTML +=        '</div>'
-        // example.innerHTML +=    '</div>'
-        // example.innerHTML +=     '</div>'
-        // example.innerHTML += '</div>'
 
+        let reviewDiv = document.createElement("div");
+        reviewDiv.classList.add("modal", "fade");
+        reviewDiv.setAttribute("id", "reviewModal");
+        reviewDiv.setAttribute("tabindex", "-1");
+        reviewDiv.setAttribute("aria-label", "reviewModalLabel");
+        reviewDiv.setAttribute("aria-hidden", "true");
 
-        // mainContainer().appendChild(example)
-        let closeBtn = document.createElement("button");
-        closeBtn.setAttribute("type", "button")
-        closeBtn.setAttribute("aria-label", "Close")
-        closeBtn.classList.add("close")
+        let modalDialog = document.createElement("div");
+        modalDialog.classList.add("modal-dialog");
 
-        let closeSpan = document.createElement("span");
-        closeSpan.setAttribute("aria-hidden", "true");
-        closeSpan.innerHTML = "x";
-        closeBtn.appendChild(closeSpan);
+        let modalContent = document.createElement("div");
+        modalContent.classList.add("modal-content");
+
+        let modalHead = document.createElement("div");
+        modalHead.classList.add("modal-header");
+
+        let modalEscape = document.createElement("button");
+        modalEscape.setAttribute("type", "button");
+        modalEscape.setAttribute("data-dismiss", "modal");
+        modalEscape.setAttribute("aria-label", "Close");
+        modalEscape.classList.add("close");
+        modalEscape.innerText = "&times;";
+
+        let modalTitle = document.createElement("h4");
+        modalTitle.classList.add("modal-title");
+
+        modalHead.appendChild(modalEscape);
+        modalHead.appendChild(modalTitle);
+
+        let modalBody = document.createElement("div");
+        modalBody.classList.add("modal-body");
 
         let reviewForm = document.createElement("form")
         reviewForm.setAttribute("id", "reviewForm")
+        reviewForm.setAttribute("aria-hidden", "true")
         
         let usernameInput = document.createElement("div")
         usernameInput.classList.add("form-group")
         usernameInput.innerHTML = "<label for='username'>Nickname: </label>";
-        usernameInput.innerHTML += "<input type='text' id='username' name='username'>";
+        usernameInput.innerHTML += "<input type='text' id='username' class='form-control' name='username'>";
 
         let contentInput = document.createElement("div");
         contentInput.classList.add("form-group");
         contentInput.innerHTML = "<label for='content'>Review: </label>";
-        contentInput.innerHTML += "<textarea id='content' name='content'></textarea>";
+        contentInput.innerHTML += "<textarea id='content' class='form-control' name='content'></textarea>";
 
         let recommendInput = document.createElement("div");
         recommendInput.classList.add("form-group");
         recommendInput.innerHTML = "<label for='recommend'> Recommend:</label>"
-        recommendInput.innerHTML += "<input type='checkbox' id='recommend' name='recommend' value='true'>";
+        recommendInput.innerHTML += "<input type='checkbox' id='recommend' class='form-control' name='recommend' value='true'>";
         
         let submitReview = document.createElement("input")
         submitReview.setAttribute("type", "submit")
+        submitReview.setAttribute("data-dismiss", "modal")
         submitReview.classList.add("btn", "btn-outline-primary")
         submitReview.value = "Add Review";
-        
-        reviewForm.appendChild(closeBtn);
+    
         reviewForm.appendChild(usernameInput);
         reviewForm.appendChild(contentInput);
         reviewForm.appendChild(recommendInput);
-        reviewForm.appendChild(submitReview);
-        submitReview.addEventListener("click", function(e) {
+        modalBody.appendChild(reviewForm)
+
+        let modalFooter = document.createElement("div");
+        modalFooter.classList.add("modal-footer");
+
+        let submitBtn = document.createElement("button");
+        submitBtn.setAttribute("type", "button");
+        submitBtn.classList.add("btn", "btn-primary");
+        submitBtn.innerText = "Create Review"
+        submitBtn.addEventListener("click", function(e) {
             Review.addReview(wineCard, reviewForm);
             e.preventDefault();
         })
 
-        wineCard.appendChild(reviewForm);
-        e.target.removeEventListener("click", Review.createReviewForm, {passive: false});
+        modalFooter.appendChild(submitBtn);
+
+        modalContent.appendChild(modalHead);
+        modalContent.appendChild(modalBody);
+        modalContent.appendChild(modalFooter);
+        modalDialog.appendChild(modalContent);
+        reviewDiv.appendChild(modalDialog);
+
+        
+        // reviewForm.appendChild(submitReview);
+        // submitReview.addEventListener("click", function(e) {
+        //     Review.addReview(wineCard, reviewForm);
+        //     e.preventDefault();
+        // })
+
+        wineCard.appendChild(reviewDiv);
+        // e.target.removeEventListener("click", Review.createReviewForm, {passive: false});
     }
 
     renderReview(wineCard) {
@@ -192,7 +216,9 @@ class Review {
     }
 
     static displayReviews(wineDiv) {
-        this.innerText = "";
+        console.log(wineDiv)
+        // debugger;
+        wineDiv.innerText = "";
         let reviews = Review.all.filter(review => review.wine_id == wineDiv.id)
         reviews.forEach(review => review.renderReview(wineDiv))
     }

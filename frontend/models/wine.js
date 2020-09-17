@@ -27,6 +27,9 @@ class Wine {
             }
         }
 
+        const reviewsContainer = document.createElement("div")
+        reviewsContainer.setAttribute("id", this.id);
+
         const editBtn = document.createElement("button");
         editBtn.id = this.id;
         editBtn.classList.add("col", "btn", "btn-sm", "btn-success")
@@ -52,7 +55,8 @@ class Wine {
         reviewBtn.setAttribute("data-toggle", "collapse");
         reviewBtn.innerText = "Reviews"
         reviewBtn.addEventListener("click", e => {
-            Review.loadReviews(e, this.id, div);
+            Review.loadReviews(e, this.id, reviewsContainer);
+            // Review.displayReviews(reviewsContainer);
         });
 
         const addReviewBtn = document.createElement("button");
@@ -60,10 +64,9 @@ class Wine {
         addReviewBtn.classList.add("col", "btn", "btn-sm", "btn-info");
         addReviewBtn.setAttribute("type", "button");
         addReviewBtn.setAttribute("data-toggle", "modal");
-        addReviewBtn.setAttribute("data-target", "#exampleModal");
+        addReviewBtn.setAttribute("data-target", "#reviewModal");
         addReviewBtn.innerText = "Create Review"
         addReviewBtn.addEventListener("click", Review.createReviewForm, {passive: false});
-        
 
         const btnDiv = document.createElement("div")
         btnDiv.classList.add("row")
@@ -72,6 +75,7 @@ class Wine {
         btnDiv.appendChild(editBtn);
         btnDiv.appendChild(deleteBtn);
         div.appendChild(btnDiv)
+        div.appendChild(reviewsContainer);
         wineContainer().appendChild(div)
 
         // div.appendChild(reviewBtn)
