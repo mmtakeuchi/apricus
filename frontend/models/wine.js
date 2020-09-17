@@ -13,8 +13,13 @@ class Wine {
 
     renderWine() {
         const div = document.createElement("div");
-        div.classList.add("card", "col-4");
+        div.classList.add("card");
         div.setAttribute("id", this.id);
+        div.setAttribute("style", "width: 22em");
+
+        const divBody = document.createElement("div");
+        divBody.classList.add("card-body");
+        divBody.setAttribute("id", this.id);
         // div.setAttribute("onclick", Review.createReviewForm)
 
         for (const attr in this) {
@@ -23,17 +28,20 @@ class Wine {
                 dl.classList.add("row");
 
                 let dt = document.createElement("dt");
-                dt.classList.add("col-sm-3");
+                dt.classList.add("col-sm-4");
                 dt.innerText = `${attr.charAt(0).toUpperCase() + attr.slice(1)}`;
 
                 let dd = document.createElement("dd");
                 dd.setAttribute("id", `${attr}`)
-                dd.classList.add("col-sm-9");
-                dd.innerText = `${this[attr].charAt(0).toUpperCase() + this[attr].slice(1)}`;
+                dd.classList.add("col-sm-8");
+                dd.innerText = `${this[attr].split(" ").map(word => {
+                    return word.charAt(0).toUpperCase() + word.slice(1)
+                   }).join(" ")}`;
                 
                 dl.appendChild(dt);
                 dl.appendChild(dd);
-                div.appendChild(dl);
+                divBody.appendChild(dl);
+                div.appendChild(divBody);
             }
         }
 
@@ -84,7 +92,7 @@ class Wine {
         btnDiv.appendChild(addReviewBtn)
         btnDiv.appendChild(editBtn);
         btnDiv.appendChild(deleteBtn);
-        div.appendChild(btnDiv)
+        divBody.appendChild(btnDiv)
         div.appendChild(reviewsContainer);
         wineContainer().appendChild(div)
 

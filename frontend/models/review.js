@@ -11,8 +11,6 @@ class Review {
     }
 
     static loadReviews(e, wineId, wineDiv) {
-        e.preventDefault();
-
         fetch(`${baseUrl}/wines/${wineId}`)
         .then (resp => {
             if (resp.status !== 200) {
@@ -56,9 +54,10 @@ class Review {
 
         let modalTitle = document.createElement("h4");
         modalTitle.classList.add("modal-title");
+        modalTitle.innerText = "Create Review";
 
-        modalHead.appendChild(modalEscape);
         modalHead.appendChild(modalTitle);
+        modalHead.appendChild(modalEscape);
 
         let modalBody = document.createElement("div");
         modalBody.classList.add("modal-body");
