@@ -31,6 +31,10 @@ class Wine {
         editBtn.id = this.id;
         editBtn.classList.add("col", "btn", "btn-sm", "btn-success")
         editBtn.setAttribute("type", "button");
+        editBtn.setAttribute("data-toggle", "collapse");
+        editBtn.setAttribute("data-target", "collapseForm");
+        editBtn.setAttribute("aria-expanded", "false");
+        editBtn.setAttribute("aria-conrol", "collapseForm");
         editBtn.innerText = "Edit Wine";
         editBtn.addEventListener("click", Wine.editWine);
 

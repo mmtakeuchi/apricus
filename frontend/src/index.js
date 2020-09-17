@@ -6,7 +6,8 @@ const wineLabel = () => document.getElementById("wine-label");
 const wineVarietal = () => document.getElementById("wine-varietal");
 const wineRegion = () => document.getElementById("wine-region");
 const winePrice = () => document.getElementsByName("wine-price");
-const wineSubmit = () => document.getElementById("create-wine")
+const wineSubmit = () => document.getElementById("create-wine");
+const formBtn = () => document.getElementById("formBtn");
 
 let editing = false;
 

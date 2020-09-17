@@ -119,8 +119,9 @@ class Review {
         
         let deleteReview = document.createElement("button");
         deleteReview.setAttribute("type", "button");
-        deleteReview.classList.add("btn", "btn-sm", "btn-danger");
+        deleteReview.classList.add("btn", "btn-sm", "btn-outline-danger");
         deleteReview.innerText = "Delete Review";
+        deleteReview.addEventListener("click", Review.destroyReview)
         
         div.appendChild(usernameP);
         div.appendChild(contentP);
@@ -169,6 +170,25 @@ class Review {
             reviewForm.innerText = "";
         })
         .catch(errors => console.log(errors))
+    }
+
+    static destroyReview(e) {
+        const review = e.target.parentNode
+
+        fetch(`${baseUrl}/reviews/${review.id}`, {
+            method: "DELETE"
+        })
+        .then (resp => {
+            if (resp.status !== 200) {
+                throw new Error(resp.statusText);
+            }
+            return resp.json();
+        })
+        .then(data => {
+            debugger;
+            review.remove();
+            this.displayReviews(review.parentNode)
+        })
     }
 
     static displayReviews(wineDiv) {

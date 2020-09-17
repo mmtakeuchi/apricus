@@ -12,22 +12,15 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="display-4 text-center">Apricus</h1>
+        <h1 class="display-4 text-center ">Apricus</h1>
 
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" id="wineForm-tab" data-toggle="tab" href="#wineForm" role="tab" aria-controls="wineForm" aria-selected="true">Add Wine</a>
-            </li>
-        </ul>
+        <div>
+            <button id="formBtn" class="btn btn-warning" type="button" data-toggle="collapse" data-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
+                Wine Form
+            </button>
+        </div><br>
 
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <br><p class="h3">Wines</p><br>
-            </div>
-
+        <div class="collapse" id="collapseForm">
             <div class="tab-pane" id="wineForm" role="tabpanel" aria-labelledby="wineForm-tab">
                 <br><p class="h4">Add New Wine</p>
                 <form>
@@ -48,7 +41,6 @@
 
                     <div class="form-group">
                         <label for="wine-price">Price Range: </label>
-                        <!-- <input type="text" id="wine-price" class="form-control" name="wine-price" placeholder="Price Range"> -->
 
                         <div class="btn-group btn-group-toggle" data-toggle="buttons" id="wine-price">
                             <label class="btn btn-outline-success active">
