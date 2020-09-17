@@ -81,12 +81,6 @@ class Review {
         recommendInput.classList.add("form-group");
         recommendInput.innerHTML = "<label for='recommend'> Recommend:</label>"
         recommendInput.innerHTML += "<input type='checkbox' id='recommend' class='form-control' name='recommend' value='true'>";
-        
-        let submitReview = document.createElement("input")
-        submitReview.setAttribute("type", "submit")
-        submitReview.setAttribute("data-dismiss", "modal")
-        submitReview.classList.add("btn", "btn-outline-primary")
-        submitReview.value = "Add Review";
     
         reviewForm.appendChild(usernameInput);
         reviewForm.appendChild(contentInput);
@@ -98,11 +92,11 @@ class Review {
 
         let submitBtn = document.createElement("button");
         submitBtn.setAttribute("type", "button");
+        submitBtn.setAttribute("data-dismiss", "modal");
         submitBtn.classList.add("btn", "btn-primary");
         submitBtn.innerText = "Create Review"
         submitBtn.addEventListener("click", function(e) {
             Review.addReview(wineCard, reviewForm);
-            e.preventDefault();
         })
 
         modalFooter.appendChild(submitBtn);
@@ -190,10 +184,14 @@ class Review {
         .then(data => {
             let review = Review.create(data.id, data.username, data.content, data.recommend, data.wine_id);
             review.renderReview(wineCard);
-
-            reviewForm.innerText = "";
         })
         .catch(errors => console.log(errors))
+
+        // reviewForm.innerText = "";
+        
+        reviewForm.querySelector("input#username").value = ""
+        reviewForm.querySelector("textarea#content").value = ""
+        reviewForm.querySelector("input#recommend").value = ""
     }
 
     static destroyReview(e) {

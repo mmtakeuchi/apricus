@@ -19,11 +19,21 @@ class Wine {
 
         for (const attr in this) {
             if (attr !== "id") {
-                let p = document.createElement("p");
-                p.classList.add(`${attr}`);
-                p.innerText = `${attr.charAt(0).toUpperCase() + attr.slice(1)}: `;
-                p.innerText += `${this[attr]}`;
-                div.appendChild(p);
+                let dl = document.createElement("dl");
+                dl.classList.add("row");
+
+                let dt = document.createElement("dt");
+                dt.classList.add("col-sm-3");
+                dt.innerText = `${attr.charAt(0).toUpperCase() + attr.slice(1)}`;
+
+                let dd = document.createElement("dd");
+                dd.setAttribute("id", `${attr}`)
+                dd.classList.add("col-sm-9");
+                dd.innerText = `${this[attr].charAt(0).toUpperCase() + this[attr].slice(1)}`;
+                
+                dl.appendChild(dt);
+                dl.appendChild(dd);
+                div.appendChild(dl);
             }
         }
 
@@ -98,10 +108,10 @@ class Wine {
     static editWine(e) {
         editing = true;
 
-        wineLabel().value = this.parentNode.parentNode.querySelector('p.label').innerText;
-        wineVarietal().value = this.parentNode.parentNode.querySelector('p.varietal').innerText;
-        wineRegion().value = this.parentNode.parentNode.querySelector('p.region').innerText;
-        winePrice().value = this.parentNode.parentNode.querySelector('p.price').innerText;
+        wineLabel().value = this.parentNode.parentNode.querySelector('dd#label').innerText;
+        wineVarietal().value = this.parentNode.parentNode.querySelector('dd#varietal').innerText;
+        wineRegion().value = this.parentNode.parentNode.querySelector('dd#region').innerText;
+        winePrice().value = this.parentNode.parentNode.querySelector('dd#price').innerText;
         wineSubmit().value = "Update Wine";
 
         Wine.editedWine = this.parentNode.parentNode
