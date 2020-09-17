@@ -211,4 +211,14 @@ class Wine {
         wineContainer().innerText = "";
         Wine.all.forEach(wine => wine.renderWine());
     }
+
+    static changeToAdd() {
+        editing = false;
+    
+        wineLabel().value = "";
+        wineVarietal().value = "";
+        wineRegion().value = "";
+        winePrice().value = "";
+        wineSubmit().value = "Create Wine";
+    }
 }

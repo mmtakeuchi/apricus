@@ -52,7 +52,7 @@ class Review {
         modalEscape.setAttribute("data-dismiss", "modal");
         modalEscape.setAttribute("aria-label", "Close");
         modalEscape.classList.add("close");
-        modalEscape.innerText = "&times;";
+        modalEscape.innerText = "x";
 
         let modalTitle = document.createElement("h4");
         modalTitle.classList.add("modal-title");
@@ -214,7 +214,6 @@ class Review {
     }
 
     static displayReviews(wineDiv) {
-        console.log(wineDiv)
         // debugger;
         wineDiv.innerText = "";
         let reviews = Review.all.filter(review => review.wine_id == wineDiv.id)

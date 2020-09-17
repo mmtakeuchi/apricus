@@ -8,6 +8,7 @@ const wineRegion = () => document.getElementById("wine-region");
 const winePrice = () => document.getElementsByName("wine-price");
 const wineSubmit = () => document.getElementById("create-wine");
 const formBtn = () => document.getElementById("formBtn");
+const cancelForm = () => document.getElementById("cancel-wine");
 
 let editing = false;
 
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", onLoad)
 function onLoad() {
     loadWines();
     wineForm().addEventListener('submit', Wine.addWine);
+    cancelForm().addEventListener('click', Wine.changeToAdd);
 }
 
 function loadWines(div) {
