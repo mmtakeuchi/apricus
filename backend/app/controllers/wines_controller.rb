@@ -30,6 +30,8 @@ class WinesController < ApplicationController
 
     def destroy
         @wine.destroy
+
+        render json: @wine
     end
 
     private

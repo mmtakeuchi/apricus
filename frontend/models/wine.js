@@ -199,6 +199,8 @@ class Wine {
     }
 
     static deleteWine(e) {
+        e.preventDefault();
+        
         fetch(`${baseUrl}/wines/${e.target.parentNode.parentNode.id}`, {
             method: "DELETE"
         })

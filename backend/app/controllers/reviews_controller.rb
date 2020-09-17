@@ -22,6 +22,8 @@ class ReviewsController < ApplicationController
 
     def destroy
         @review.destroy
+
+        render json: @review
     end
 
     private 
