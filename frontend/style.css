@@ -19,3 +19,11 @@
     margin: 5px;
     border-style: double;
 }
+
+.reviewsContainer {
+    margin: 10px;
+}
+
+.list-unstyled {
+    margin-bottom: 15px;
+}
