@@ -84,10 +84,13 @@ class Wine {
         addReviewBtn.setAttribute("data-toggle", "modal");
         addReviewBtn.setAttribute("data-target", "#reviewModal");
         addReviewBtn.innerText = "Create Review"
-        addReviewBtn.addEventListener("click", Review.createReviewForm, {passive: false});
+        addReviewBtn.addEventListener("click", e => {
+            Review.createReviewForm(this.id, reviewsContainer)
+        });
 
         const btnDiv = document.createElement("div")
         btnDiv.classList.add("row")
+        
         btnDiv.appendChild(reviewBtn);
         btnDiv.appendChild(addReviewBtn)
         btnDiv.appendChild(editBtn);

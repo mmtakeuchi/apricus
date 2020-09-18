@@ -11,6 +11,7 @@ class Review {
     }
 
     static loadReviews(e, wineId, wineDiv) {
+
         fetch(`${baseUrl}/wines/${wineId}`)
         .then (resp => {
             if (resp.status !== 200) {
@@ -26,8 +27,9 @@ class Review {
     }
 
 
-    static createReviewForm(e) {
-        const wineCard = e.target.parentNode.parentNode;
+    static createReviewForm(wineId, reviewsContainer) {
+        // debugger;
+        // const wineCard = e.target.parentNode.parentNode;
 
         let reviewDiv = document.createElement("div");
         reviewDiv.classList.add("modal", "fade");
@@ -95,7 +97,7 @@ class Review {
         submitBtn.classList.add("btn", "btn-primary");
         submitBtn.innerText = "Create Review"
         submitBtn.addEventListener("click", function(e) {
-            Review.addReview(wineCard, reviewForm);
+            Review.addReview(reviewsContainer, reviewForm);
         })
 
         modalFooter.appendChild(submitBtn);
@@ -113,11 +115,12 @@ class Review {
         //     e.preventDefault();
         // })
 
-        wineCard.appendChild(reviewDiv);
+        reviewsContainer.appendChild(reviewDiv);
         // e.target.removeEventListener("click", Review.createReviewForm, {passive: false});
     }
 
     renderReview(wineCard) {
+        
         let div = document.createElement("div");
         div.setAttribute("id", this.id);
         div.classList.add("list-unstyled")
@@ -157,7 +160,8 @@ class Review {
         return review;
     }
 
-    static addReview(wineCard, reviewForm) {
+    static addReview(reviewsContainer, reviewForm) {
+        debugger;
         const usernameInputValue = reviewForm.querySelector("input#username").value
         const contentInputValue = reviewForm.querySelector("textarea#content").value
         const recommendInputValue = reviewForm.querySelector("input#recommend").checked
@@ -167,7 +171,7 @@ class Review {
                 username: usernameInputValue,
                 content: contentInputValue,
                 recommend: recommendInputValue,
-                wine_id: wineCard.id
+                wine_id: reviewsContainer.id
             }
         }
 
@@ -182,7 +186,7 @@ class Review {
         .then(resp => resp.json())
         .then(data => {
             let review = Review.create(data.id, data.username, data.content, data.recommend, data.wine_id);
-            review.renderReview(wineCard);
+            review.renderReview(reviewsContainer);
         })
         .catch(errors => console.log(errors))
 
@@ -206,16 +210,15 @@ class Review {
             return resp.json();
         })
         .then(data => {
-            debugger;
             review.remove();
-            this.displayReviews(review.parentNode)
+            Review.displayReviews(e, review.parentNode)
         })
     }
 
-    static displayReviews(wineDiv) {
+    static displayReviews(reviewsContainer) {
         // debugger;
-        wineDiv.innerText = "";
-        let reviews = Review.all.filter(review => review.wine_id == wineDiv.id)
-        reviews.forEach(review => review.renderReview(wineDiv))
+        reviewsContainer.innerText = "";
+        let reviews = Review.all.filter(review => review.wine_id == reviewsContainer.id)
+        reviews.forEach(review => review.renderReview(reviewsContainer))
     }
 }
