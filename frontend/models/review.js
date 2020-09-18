@@ -20,14 +20,15 @@ class Review {
             return resp.json()
         })
         .then (data => {
+            debugger;
             let reviews = data.reviews.filter(review => review.wine_id == data.id)
-            Review.createReviews(reviews);
+            // Review.createReviews(reviews);
             Review.displayReviews(wineDiv);
         })
     }
 
 
-    static createReviewForm(wineId, reviewsContainer) {
+    static createReviewForm(reviewsContainer) {
         // debugger;
         // const wineCard = e.target.parentNode.parentNode;
 
@@ -119,8 +120,7 @@ class Review {
         // e.target.removeEventListener("click", Review.createReviewForm, {passive: false});
     }
 
-    renderReview(wineCard) {
-        
+    renderReview(reviewsContainer) {
         let div = document.createElement("div");
         div.setAttribute("id", this.id);
         div.classList.add("list-unstyled")
@@ -147,7 +147,7 @@ class Review {
         div.appendChild(contentP);
         div.appendChild(recommendP);
         div.appendChild(deleteReview);
-        wineCard.appendChild(div);
+        reviewsContainer.appendChild(div);
     }
 
     static createReviews(reviewData) {
@@ -218,7 +218,7 @@ class Review {
     static displayReviews(reviewsContainer) {
         // debugger;
         reviewsContainer.innerText = "";
-        let reviews = Review.all.filter(review => review.wine_id == reviewsContainer.id)
+        let reviews = Review.all.filter(review => review.wine_id == reviewsContainer.id);
         reviews.forEach(review => review.renderReview(reviewsContainer))
     }
 }

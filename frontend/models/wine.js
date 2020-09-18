@@ -8,7 +8,7 @@ class Wine {
         this.label = label;
         this.varietal = varietal;
         this.region = region;
-        this.price = price
+        this.price = price;
     }
 
     renderWine() {
@@ -85,7 +85,7 @@ class Wine {
         addReviewBtn.setAttribute("data-target", "#reviewModal");
         addReviewBtn.innerText = "Create Review"
         addReviewBtn.addEventListener("click", e => {
-            Review.createReviewForm(this.id, reviewsContainer)
+            Review.createReviewForm(reviewsContainer)
         });
 
         const btnDiv = document.createElement("div")
