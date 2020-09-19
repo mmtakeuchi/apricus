@@ -76,13 +76,11 @@ class Wine {
         reviewBtn.setAttribute("data-target", `review-${this.id}`);
         reviewBtn.innerText = "Reviews"
         reviewBtn.addEventListener("click", e => {
-            // debugger;
             if (reviewsContainer.childNodes.length == 0) {
                 Review.loadReviews(reviewsContainer);
             }
             reviewsContainer.classList.toggle("collapse");
         });
-        // aria-expanded="false" aria-controls="collapseExample">
 
         const addReviewBtn = document.createElement("button");
         addReviewBtn.id = this.id;
@@ -92,10 +90,8 @@ class Wine {
         addReviewBtn.setAttribute("data-target", "#reviewModal");
         addReviewBtn.innerText = "Create Review"
         addReviewBtn.addEventListener("click", e => {
-            // console.log(e)
             Review.createReviewForm(reviewsContainer)
         });
-        // type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 
         const btnDiv = document.createElement("div")
         btnDiv.classList.add("row")
@@ -107,12 +103,6 @@ class Wine {
         divBody.appendChild(btnDiv)
         div.appendChild(reviewsContainer);
         wineContainer().appendChild(div)
-
-        // div.appendChild(reviewBtn)
-        // div.appendChild(addReviewBtn)
-        // div.appendChild(editBtn);
-        // div.appendChild(deleteBtn);
-        // wineContainer().appendChild(div)
     }
 
     static createWines(wineData) {
@@ -131,10 +121,9 @@ class Wine {
         wineLabel().value = this.parentNode.parentNode.querySelector('dd#label').innerText;
         wineVarietal().value = this.parentNode.parentNode.querySelector('dd#varietal').innerText;
         wineRegion().value = this.parentNode.parentNode.querySelector('dd#region').innerText;
-        winePrice().value = this.parentNode.parentNode.querySelector('dd#price').innerText;
+        winePrice().active = Array.prototype.find.call(this.parentNode.parentNode.querySelector('dd#price'), price => price.active);
         // document.getElementById(this.parentNode.parentNode.querySelector('dd#price').innerText).classList.add("active")
         wineSubmit().value = "Update Wine";
-        // debugger;
 
         Wine.editedWine = this.parentNode.parentNode
     }
@@ -143,7 +132,6 @@ class Wine {
         if (editing) {
             Wine.updateWine();
         } else {
-            debugger;
             const strongParams = {
                 wine: {
                     label: wineLabel().value,
@@ -163,19 +151,15 @@ class Wine {
             })
             .then(resp => resp.json())
             .then(data => {
-                debugger;
                 let wine = Wine.create(data.id, data.label, data.varietal, data.region, data.price);
                 wine.renderWine();
                 resetInputs();
             })
             .catch(errors => console.log(errors));
-
-             
         }
     }
 
     static updateWine(e) {
-        debugger;
         let label = wineLabel().value;
         let varietal = wineVarietal().value;
         let region = wineRegion().value;

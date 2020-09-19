@@ -19,7 +19,6 @@ class Review {
             return resp.json()
         })
         .then (data => {
-            // debugger;
             let reviews = data.reviews.filter(review => review.wine_id == data.id)
             Review.createReviews(reviews);
             Review.displayReviews(reviewsContainer);
@@ -28,9 +27,6 @@ class Review {
 
 
     static createReviewForm(reviewsContainer) {
-        console.log(reviewsContainer);
-        // const wineCard = e.target.parentNode.parentNode;
-
         let reviewDiv = document.createElement("div");
         reviewDiv.classList.add("modal", "fade");
         reviewDiv.setAttribute("id", "reviewModal");
@@ -108,16 +104,7 @@ class Review {
         modalDialog.appendChild(modalContent);
         reviewDiv.appendChild(modalDialog);
 
-        
-        // reviewForm.appendChild(submitReview);
-        // submitReview.addEventListener("click", function(e) {
-        //     Review.addReview(wineCard, reviewForm);
-        //     e.preventDefault();
-        // })
         reviewsContainer.parentNode.appendChild(reviewDiv);
-        // console.log("hello")
-        // debugger;
-        // e.target.removeEventListener("click", Review.createReviewForm, {passive: false});
     }
 
     renderReview(reviewsContainer) {
@@ -189,18 +176,15 @@ class Review {
         .then(data => {
             let review = Review.create(data.id, data.username, data.content, data.recommend, data.wine_id);
             review.renderReview(reviewsContainer);
+
+            reviewForm.querySelector("input#username").value = ""
+            reviewForm.querySelector("textarea#content").value = ""
+            reviewForm.querySelector("input#recommend").value = ""
         })
         .catch(errors => console.log(errors))
-
-        // reviewForm.innerText = "";
-        
-        reviewForm.querySelector("input#username").value = ""
-        reviewForm.querySelector("textarea#content").value = ""
-        reviewForm.querySelector("input#recommend").value = ""
     }
 
     static destroyReview(e) {
-        // debugger;
         const review = e.target.parentNode
         const reviewParent = e.target.parentNode.parentNode
 
@@ -215,14 +199,12 @@ class Review {
         })
         .then(data => {
             review.remove();
-            debugger;
             Review.all = Review.all.filter(review => data.id !== review.id);
             Review.displayReviews(reviewParent)
         })
     }
 
     static displayReviews(reviewsContainer) {
-        // debugger;
         reviewsContainer.innerText = "";
         let reviews = Review.all.filter(review => review.wine_id == reviewsContainer.parentNode.id);
         reviews.forEach(review => review.renderReview(reviewsContainer))
