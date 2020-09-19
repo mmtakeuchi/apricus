@@ -139,9 +139,7 @@ class Wine {
         Wine.editedWine = this.parentNode.parentNode
     }
 
-    static addWine(e) {
-        e.preventDefault();
-
+    static addWine() {
         if (editing) {
             Wine.updateWine();
         } else {
@@ -166,14 +164,16 @@ class Wine {
             .then(data => {
                 let wine = Wine.create(data.id, data.label, data.varietal, data.region, data.price);
                 wine.renderWine();
+                resetInputs();
             })
             .catch(errors => console.log(errors));
 
-            resetInputs();
+             
         }
     }
 
     static updateWine(e) {
+        debugger;
         let label = wineLabel().value;
         let varietal = wineVarietal().value;
         let region = wineRegion().value;

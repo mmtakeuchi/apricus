@@ -16,7 +16,10 @@ document.addEventListener("DOMContentLoaded", onLoad)
 
 function onLoad() {
     loadWines();
-    wineForm().addEventListener('submit', Wine.addWine);
+    wineForm().addEventListener('submit', e => {
+        e.preventDefault();
+        Wine.addWine()
+    });
     cancelForm().addEventListener('click', Wine.changeToAdd);
 }
 
@@ -55,4 +58,6 @@ function resetInputs() {
     wineVarietal().value = "";
     wineRegion().value = "";
     winePrice().value = "";
+    wineForm().classList.toggle("was-validated");
+
 }
