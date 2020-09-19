@@ -10,9 +10,8 @@ class Review {
         this.wine_id = wine_id
     }
 
-    static loadReviews(e, wineId, wineDiv) {
-
-        fetch(`${baseUrl}/wines/${wineId}`)
+    static loadReviews(reviewsContainer) {
+        fetch(`${baseUrl}/wines/${reviewsContainer.parentNode.id}`)
         .then (resp => {
             if (resp.status !== 200) {
                 throw new Error(resp.statusText);
@@ -20,9 +19,10 @@ class Review {
             return resp.json()
         })
         .then (data => {
+            debugger;
             let reviews = data.reviews.filter(review => review.wine_id == data.id)
             Review.createReviews(reviews);
-            Review.displayReviews(wineDiv);
+            Review.displayReviews(reviewsContainer);
         })
     }
 
@@ -160,7 +160,6 @@ class Review {
     }
 
     static addReview(reviewsContainer, reviewForm) {
-        debugger;
         const usernameInputValue = reviewForm.querySelector("input#username").value
         const contentInputValue = reviewForm.querySelector("textarea#content").value
         const recommendInputValue = reviewForm.querySelector("input#recommend").checked

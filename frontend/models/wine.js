@@ -73,7 +73,7 @@ class Wine {
         reviewBtn.setAttribute("data-toggle", "collapse");
         reviewBtn.innerText = "Reviews"
         reviewBtn.addEventListener("click", e => {
-            Review.loadReviews(e, this.id, reviewsContainer);
+            Review.loadReviews(reviewsContainer);
             // Review.displayReviews(reviewsContainer);
         });
 
