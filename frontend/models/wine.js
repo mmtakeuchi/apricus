@@ -20,7 +20,7 @@ class Wine {
         const divBody = document.createElement("div");
         divBody.classList.add("card-body");
         divBody.setAttribute("id", this.id);
-        div.addEventListener("click", Review.createReviewForm)
+        // div.addEventListener("click",()=>{console.log('card clicked')})
 
         for (const attr in this) {
             if (attr !== "id") {
@@ -92,6 +92,7 @@ class Wine {
         addReviewBtn.setAttribute("data-target", "#reviewModal");
         addReviewBtn.innerText = "Create Review"
         addReviewBtn.addEventListener("click", e => {
+            // console.log(e)
             Review.createReviewForm(reviewsContainer)
         });
         // type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -126,13 +127,14 @@ class Wine {
 
     static editWine(e) {
         editing = true;
-        debugger;
 
         wineLabel().value = this.parentNode.parentNode.querySelector('dd#label').innerText;
         wineVarietal().value = this.parentNode.parentNode.querySelector('dd#varietal').innerText;
         wineRegion().value = this.parentNode.parentNode.querySelector('dd#region').innerText;
         winePrice().value = this.parentNode.parentNode.querySelector('dd#price').innerText;
+        // document.getElementById(this.parentNode.parentNode.querySelector('dd#price').innerText).classList.add("active")
         wineSubmit().value = "Update Wine";
+        // debugger;
 
         Wine.editedWine = this.parentNode.parentNode
     }
@@ -223,7 +225,6 @@ class Wine {
             return resp.json();
         })
         .then(data => {
-            debugger;
             Wine.all = Wine.all.filter(wine => wine.id !== data.id);
             Wine.displayWines();
         })

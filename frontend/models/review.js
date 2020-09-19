@@ -28,6 +28,7 @@ class Review {
 
 
     static createReviewForm(reviewsContainer) {
+        console.log(reviewsContainer);
         // const wineCard = e.target.parentNode.parentNode;
 
         let reviewDiv = document.createElement("div");
@@ -113,8 +114,9 @@ class Review {
         //     Review.addReview(wineCard, reviewForm);
         //     e.preventDefault();
         // })
-        reviewsContainer.parentNode.parentNode.appendChild(reviewDiv);
-        debugger;
+        reviewsContainer.parentNode.appendChild(reviewDiv);
+        // console.log("hello")
+        // debugger;
         // e.target.removeEventListener("click", Review.createReviewForm, {passive: false});
     }
 
@@ -165,12 +167,13 @@ class Review {
         const contentInputValue = reviewForm.querySelector("textarea#content").value
         const recommendInputValue = reviewForm.querySelector("input#recommend").checked
         
+        
         const strongParams = {
             review: {
                 username: usernameInputValue,
                 content: contentInputValue,
                 recommend: recommendInputValue,
-                wine_id: reviewsContainer.id
+                wine_id: reviewsContainer.parentNode.id
             }
         }
 
@@ -197,7 +200,9 @@ class Review {
     }
 
     static destroyReview(e) {
+        // debugger;
         const review = e.target.parentNode
+        const reviewParent = e.target.parentNode.parentNode
 
         fetch(`${baseUrl}/reviews/${review.id}`, {
             method: "DELETE"
@@ -210,13 +215,15 @@ class Review {
         })
         .then(data => {
             review.remove();
-            Review.displayReviews(e, review.parentNode)
+            debugger;
+            Review.all = Review.all.filter(review => data.id !== review.id);
+            Review.displayReviews(reviewParent)
         })
     }
 
     static displayReviews(reviewsContainer) {
         // debugger;
-        // reviewsContainer.innerText = "";
+        reviewsContainer.innerText = "";
         let reviews = Review.all.filter(review => review.wine_id == reviewsContainer.parentNode.id);
         reviews.forEach(review => review.renderReview(reviewsContainer))
     }
