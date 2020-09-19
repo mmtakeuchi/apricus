@@ -20,7 +20,7 @@ class Wine {
         const divBody = document.createElement("div");
         divBody.classList.add("card-body");
         divBody.setAttribute("id", this.id);
-        // div.setAttribute("onclick", Review.createReviewForm)
+        div.addEventListener("click", Review.createReviewForm)
 
         for (const attr in this) {
             if (attr !== "id") {
@@ -46,7 +46,9 @@ class Wine {
         }
 
         const reviewsContainer = document.createElement("div")
-        reviewsContainer.setAttribute("id", this.id);
+        reviewsContainer.setAttribute("id", `review-${this.id}`);
+        reviewsContainer.classList.add("collapse");
+      
 
         const editBtn = document.createElement("button");
         editBtn.id = this.id;
@@ -71,11 +73,16 @@ class Wine {
         reviewBtn.setAttribute("id", this.id)
         reviewBtn.setAttribute("type", "button");
         reviewBtn.setAttribute("data-toggle", "collapse");
+        reviewBtn.setAttribute("data-target", `review-${this.id}`);
         reviewBtn.innerText = "Reviews"
         reviewBtn.addEventListener("click", e => {
-            Review.loadReviews(reviewsContainer);
-            // Review.displayReviews(reviewsContainer);
+            // debugger;
+            if (reviewsContainer.childNodes.length == 0) {
+                Review.loadReviews(reviewsContainer);
+            }
+            reviewsContainer.classList.toggle("collapse");
         });
+        // aria-expanded="false" aria-controls="collapseExample">
 
         const addReviewBtn = document.createElement("button");
         addReviewBtn.id = this.id;
@@ -87,6 +94,7 @@ class Wine {
         addReviewBtn.addEventListener("click", e => {
             Review.createReviewForm(reviewsContainer)
         });
+        // type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 
         const btnDiv = document.createElement("div")
         btnDiv.classList.add("row")
@@ -118,6 +126,7 @@ class Wine {
 
     static editWine(e) {
         editing = true;
+        debugger;
 
         wineLabel().value = this.parentNode.parentNode.querySelector('dd#label').innerText;
         wineVarietal().value = this.parentNode.parentNode.querySelector('dd#varietal').innerText;
