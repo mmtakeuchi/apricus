@@ -59,5 +59,4 @@ function resetInputs() {
     wineRegion().value = "";
     winePrice().value = "";
     wineForm().classList.toggle("was-validated");
-
 }

@@ -143,6 +143,7 @@ class Wine {
         if (editing) {
             Wine.updateWine();
         } else {
+            debugger;
             const strongParams = {
                 wine: {
                     label: wineLabel().value,
@@ -162,6 +163,7 @@ class Wine {
             })
             .then(resp => resp.json())
             .then(data => {
+                debugger;
                 let wine = Wine.create(data.id, data.label, data.varietal, data.region, data.price);
                 wine.renderWine();
                 resetInputs();
@@ -177,7 +179,7 @@ class Wine {
         let label = wineLabel().value;
         let varietal = wineVarietal().value;
         let region = wineRegion().value;
-        let price = winePrice().value;
+        let price = Array.prototype.find.call(winePrice(), price => price.checked).id;
 
         const strongParams = {
             wine: {
