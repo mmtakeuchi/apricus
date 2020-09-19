@@ -20,9 +20,8 @@ class Review {
             return resp.json()
         })
         .then (data => {
-            debugger;
             let reviews = data.reviews.filter(review => review.wine_id == data.id)
-            // Review.createReviews(reviews);
+            Review.createReviews(reviews);
             Review.displayReviews(wineDiv);
         })
     }

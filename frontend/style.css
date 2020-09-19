@@ -3,16 +3,40 @@
 }
 
 .second {
-    margin-left: 20px;   
-    margin-right: 20px; 
+    margin-left: 15px;   
+    margin-right: 15px; 
+    padding-top: 5px;
     padding-left: 20px;   
     padding-right: 15px; 
     background-color: white;
 }
 
-.main {
-    padding-left: 15px;
-    padding-right: 15px;
+nav {
+    margin-bottom: 10px;
+}
+
+button#formBtn {
+    margin-left: 20px;   
+    margin-right: 5px; 
+    padding-top: 5px;
+}
+
+div#collapseForm {
+    margin-left: 5px;   
+    margin-right: 5px; 
+    padding-top: 5px;
+    padding-left: 20px;   
+    padding-right: 15px; 
+    background-color: white;  
+}
+
+div.main {
+    margin-left: 5px;   
+    margin-right: 5px; 
+    padding-top: 5px;
+    padding-left: 20px;   
+    padding-right: 15px; 
+    background-color: white;  
 }
 
 .card {
@@ -26,4 +50,9 @@
 
 .list-unstyled {
     margin-bottom: 15px;
+}
+
+h1 {
+    margin: 450px;
+    border: double;
 }
