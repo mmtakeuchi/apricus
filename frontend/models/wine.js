@@ -47,7 +47,7 @@ class Wine {
 
         const reviewsContainer = document.createElement("div")
         reviewsContainer.setAttribute("id", `review-${this.id}`);
-        reviewsContainer.classList.add("collapse");
+        reviewsContainer.classList.add("collapse", "reviews");
       
 
         const editBtn = document.createElement("button");

@@ -52,6 +52,15 @@ div.main {
     margin-bottom: 15px;
 }
 
+div.reviews {
+    margin-left: 5px;   
+    margin-right: 5px; 
+    padding-top: 5px;
+    padding-left: 20px;   
+    padding-right: 15px; 
+    background-color: white; 
+}
+
 h1 {
     margin: 450px;
     border: double;

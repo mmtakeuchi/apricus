@@ -75,9 +75,9 @@ class Review {
         contentInput.innerHTML += "<textarea id='content' class='form-control' name='content'></textarea>";
 
         let recommendInput = document.createElement("div");
-        recommendInput.classList.add("form-group");
-        recommendInput.innerHTML = "<label for='recommend'> Recommend:</label>"
-        recommendInput.innerHTML += "<input type='checkbox' id='recommend' class='form-control' name='recommend' value='true'>";
+        recommendInput.classList.add("form-group", "custome-control", "custom-switch");
+        recommendInput.innerHTML = "<input type='checkbox' id='recommend' class='form-control custom-control-input' name='recommend' value='true'>";
+        recommendInput.innerHTML += "<label class='custom-control-label' for='recommend'> Recommend</label>"
     
         reviewForm.appendChild(usernameInput);
         reviewForm.appendChild(contentInput);
