@@ -116,12 +116,20 @@ class Wine {
     }
 
     static editWine(e) {
+        resetInputs();
         editing = true;
 
+        wineFormHeader().innerText = "Edit Wine"
         wineLabel().value = this.parentNode.parentNode.querySelector('dd#label').innerText;
         wineVarietal().value = this.parentNode.parentNode.querySelector('dd#varietal').innerText;
         wineRegion().value = this.parentNode.parentNode.querySelector('dd#region').innerText;
-        winePrice().active = Array.prototype.find.call(this.parentNode.parentNode.querySelector('dd#price'), price => price.active);
+
+        let dollar = this.parentNode.parentNode.querySelector('dd#price').innerText;
+        
+        Array.prototype.find.call(winePrice(), price => price.id == dollar).parentNode.classList.toggle("active");
+        Array.prototype.find.call(winePrice(), price => price.id == dollar).setAttribute("checked", true);
+        
+        // Array.prototype.find.call(this.parentNode.parentNode.querySelector('dd#price'), price => price.checked).classList.toggle("active");
         // document.getElementById(this.parentNode.parentNode.querySelector('dd#price').innerText).classList.add("active")
         wineSubmit().value = "Update Wine";
 

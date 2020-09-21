@@ -1,6 +1,7 @@
 const baseUrl = "http://localhost:3000"
 
 const wineContainer = () => document.querySelector("div.main");
+const wineFormHeader = () => document.querySelector("p.h4")
 const wineForm = () => document.querySelector("form");
 const wineLabel = () => document.getElementById("wine-label");
 const wineVarietal = () => document.getElementById("wine-varietal");
@@ -57,6 +58,9 @@ function resetInputs() {
     wineLabel().value = "";
     wineVarietal().value = "";
     wineRegion().value = "";
-    winePrice().value = "";
+    
+    Array.prototype.find.call(winePrice(), price => price.checked).parentNode.classList.remove("active");
+    Array.prototype.find.call(winePrice(), price => price.checked).removeAttribute("checked");
+    
     wineForm().classList.toggle("was-validated");
 }
