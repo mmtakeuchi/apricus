@@ -19,7 +19,15 @@ function onLoad() {
     loadWines();
     wineForm().addEventListener('submit', e => {
         e.preventDefault();
-        Wine.addWine()
+
+        var form = document.getElementById("bootForm");
+          
+        if (form.checkValidity()) {
+            Wine.addWine()
+        //     e.stopPropagation();
+        }
+        
+        form.classList.add('was-validated');
     });
     cancelForm().addEventListener('click', Wine.changeToAdd);
 }
@@ -58,9 +66,13 @@ function resetInputs() {
     wineLabel().value = "";
     wineVarietal().value = "";
     wineRegion().value = "";
+
+    let priceRange = Array.prototype.find.call(winePrice(), price => price.checked);
+
+    if (priceRange) {
+        priceRange.parentNode.classList.remove("active");
+        priceRange.removeAttribute("checked");
+    }
     
-    Array.prototype.find.call(winePrice(), price => price.checked).parentNode.classList.remove("active");
-    Array.prototype.find.call(winePrice(), price => price.checked).removeAttribute("checked");
-    
-    wineForm().classList.toggle("was-validated");
+    wineForm().classList.remove("was-validated");
 }

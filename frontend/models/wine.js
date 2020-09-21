@@ -21,7 +21,7 @@ class Wine {
         divBody.classList.add("card-body");
         divBody.setAttribute("id", this.id);
         // div.addEventListener("click",()=>{console.log('card clicked')})
-
+        
         for (const attr in this) {
             if (attr !== "id") {
                 let dl = document.createElement("dl");
@@ -34,6 +34,8 @@ class Wine {
                 let dd = document.createElement("dd");
                 dd.setAttribute("id", `${attr}`)
                 dd.classList.add("col-sm-8");
+                
+                console.log(this[attr], attr)
                 dd.innerText = `${this[attr].split(" ").map(word => {
                     return word.charAt(0).toUpperCase() + word.slice(1)
                    }).join(" ")}`;
@@ -125,7 +127,7 @@ class Wine {
         wineRegion().value = this.parentNode.parentNode.querySelector('dd#region').innerText;
 
         let dollar = this.parentNode.parentNode.querySelector('dd#price').innerText;
-        
+
         Array.prototype.find.call(winePrice(), price => price.id == dollar).parentNode.classList.toggle("active");
         Array.prototype.find.call(winePrice(), price => price.id == dollar).setAttribute("checked", true);
         
@@ -140,6 +142,7 @@ class Wine {
         if (editing) {
             Wine.updateWine();
         } else {
+            debugger;
             const strongParams = {
                 wine: {
                     label: wineLabel().value,
@@ -172,6 +175,7 @@ class Wine {
         let varietal = wineVarietal().value;
         let region = wineRegion().value;
         let price = Array.prototype.find.call(winePrice(), price => price.checked).id;
+        debugger;
 
         const strongParams = {
             wine: {
@@ -198,10 +202,10 @@ class Wine {
             updatedWien.region = data.region;
             updatedWien.price = data.price;
             Wine.displayWines();
+            resetInputs();  
 
             editing = false;
-            Wine.editedWine = null;
-            resetInputs();
+            Wine.editedWine = null; 
             wineSubmit().value = "Create Wine";
         })
     }
