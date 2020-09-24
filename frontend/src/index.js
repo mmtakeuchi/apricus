@@ -11,6 +11,7 @@ const wineSubmit = () => document.getElementById("create-wine");
 const formBtn = () => document.getElementById("formBtn");
 const cancelForm = () => document.getElementById("cancel-wine");
 const wineSearch = () => document.getElementById("wineSearch");
+const searchInput = () => document.getElementById("wineSearchForm");
 
 let editing = false;
 
@@ -31,6 +32,16 @@ function onLoad() {
         form.classList.add('was-validated');
     });
     cancelForm().addEventListener('click', Wine.changeToAdd);
+    wineSearch().addEventListener('submit', e => {
+        e.preventDefault();
+
+        if (searchInput().value.length !== 0) {
+            Wine.wineFilter(e);
+        } else {
+            Wine.displayWines();
+        }
+        
+    });
 }
 
 function loadWines(div) {

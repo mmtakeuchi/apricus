@@ -3,6 +3,7 @@ class WinesController < ApplicationController
 
     def index
         @wines = Wine.all
+        @wines = @wines.sort_by{ |wine| wine.label }
         render json: @wines, except: [:created_at, :updated_at]
     end
 

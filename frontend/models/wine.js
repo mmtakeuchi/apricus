@@ -224,6 +224,21 @@ class Wine {
         })
     }
 
+    static wineFilter() {
+        const searchValue = searchInput().value;
+        
+        const wineFilter = Wine.all.filter(wine => {
+            return wine.label.toLowerCase().includes(searchValue.toLowerCase())
+        })
+
+        wineContainer().innerText = "";
+        wineFilter.forEach(wine => wine.renderWine());
+        
+        searchInput().value = "";
+
+        // debugger;
+    }
+
     static displayWines() {
         wineContainer().innerText = "";
         Wine.all.forEach(wine => wine.renderWine());

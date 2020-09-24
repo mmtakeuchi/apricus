@@ -3,4 +3,11 @@ class Wine < ApplicationRecord
 
     validates :label, :varietal, :region, :price, presence: true
     validates :label, uniqueness: true
+    before_validation :capitalize_label, on: [ :create, :update ]
+
+    private
+
+    def capitalize_label
+      self.label = label.capitalize
+    end
 end
