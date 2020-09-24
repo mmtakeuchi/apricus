@@ -35,7 +35,6 @@ class Wine {
                 dd.setAttribute("id", `${attr}`)
                 dd.classList.add("col-sm-8");
                 
-                console.log(this[attr], attr)
                 dd.innerText = `${this[attr].split(" ").map(word => {
                     return word.charAt(0).toUpperCase() + word.slice(1)
                    }).join(" ")}`;
@@ -131,8 +130,6 @@ class Wine {
         Array.prototype.find.call(winePrice(), price => price.id == dollar).parentNode.classList.toggle("active");
         Array.prototype.find.call(winePrice(), price => price.id == dollar).setAttribute("checked", true);
         
-        // Array.prototype.find.call(this.parentNode.parentNode.querySelector('dd#price'), price => price.checked).classList.toggle("active");
-        // document.getElementById(this.parentNode.parentNode.querySelector('dd#price').innerText).classList.add("active")
         wineSubmit().value = "Update Wine";
 
         Wine.editedWine = this.parentNode.parentNode
@@ -175,7 +172,6 @@ class Wine {
         let varietal = wineVarietal().value;
         let region = wineRegion().value;
         let price = Array.prototype.find.call(winePrice(), price => price.checked).id;
-        debugger;
 
         const strongParams = {
             wine: {

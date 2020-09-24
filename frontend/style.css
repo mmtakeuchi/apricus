@@ -30,6 +30,15 @@ div#collapseForm {
     background-color: white;  
 }
 
+form#wineSearch {
+    margin-left: 5px;   
+    margin-right: 5px; 
+    padding-top: 5px;
+    padding-left: 20px;   
+    padding-right: 15px; 
+    background-color: white; 
+}
+
 div.main {
     margin-left: 5px;   
     margin-right: 5px; 
