@@ -139,7 +139,6 @@ class Wine {
         if (editing) {
             Wine.updateWine();
         } else {
-            debugger;
             const strongParams = {
                 wine: {
                     label: wineLabel().value,
@@ -235,8 +234,6 @@ class Wine {
         wineFilter.forEach(wine => wine.renderWine());
         
         searchInput().value = "";
-
-        // debugger;
     }
 
     static displayWines() {

@@ -8,7 +8,11 @@ class WinesController < ApplicationController
     end
 
     def show
-        render json: @wine, include: [:reviews]
+        if @wine
+            render json: @wine, include: [:reviews]
+        else
+            render json: { message: 'Wine not found' }
+        end
     end
 
     def create
