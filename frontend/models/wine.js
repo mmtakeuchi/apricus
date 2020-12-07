@@ -243,7 +243,8 @@ class Wine {
 
     static changeToAdd() {
         editing = false;
-    
+
+        wineFormHeader().innerText = "Add New Wine"
         wineLabel().value = "";
         wineVarietal().value = "";
         wineRegion().value = "";

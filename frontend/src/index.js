@@ -26,7 +26,6 @@ function onLoad() {
           
         if (form.checkValidity()) {
             Wine.addWine()
-        //     e.stopPropagation();
         }
         
         form.classList.add('was-validated');
